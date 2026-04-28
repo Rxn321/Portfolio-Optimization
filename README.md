@@ -13,10 +13,11 @@ Mah 2026 summer project
 - Evaluate portfolio performance:
   - Total return
   - Total risk
-- Simulate thousands of portfolios using Monte Carlo methods
-- Visualize risk vs return tradeoffs (Efficient Frontier)
+- Simulate portfolios using Monte Carlo methods(whatever this means)
+- Visualize risk vs return tradeoffs
 - Identify optimal portfolio (best risk-adjusted return)
 - Compare optimized portfolio vs equal-weight portfolio
 - Benchmark against S&P 500 (SPY)
-- Present results using clear visualizations and analysis
+
+- Present results using clear visualizations and analysis(cool graph and website)
 
