@@ -1,18 +1,22 @@
-# Portfolio-Optimization
-This is my summer 2026 project since is could not get an internship :(
-Here are some of my goals:
-    -Collect real stock market data using yfinance
-    -Clean and organize financial data (prices → returns)
-    -Calculate key statistics:
-        expected return
-        volatility (risk)
-        covariance matrix
-    -Measure portfolio performance:
-        total return
-        total risk
-    -Simulate many random portfolios (Monte Carlo method, whatever this means)
-    -Visualize risk vs return tradeoffs with cool graphs
-    -Identify an “optimal” portfolio (best risk-adjusted return)
-    -Compare optimized portfolio vs baseline portfolio
-    -Visualize results using clear graphs
-    -Communicate findings(another website)
+# 📊 Portfolio Optimization Project
+
+Mah 2026 summer project
+
+## Project Goals
+
+- Collect real stock market data using `yfinance`
+- Clean and process financial data (prices → returns)
+- Compute key financial metrics:
+  - Expected return
+  - Volatility (risk)
+  - Covariance matrix
+- Evaluate portfolio performance:
+  - Total return
+  - Total risk
+- Simulate thousands of portfolios using Monte Carlo methods
+- Visualize risk vs return tradeoffs (Efficient Frontier)
+- Identify optimal portfolio (best risk-adjusted return)
+- Compare optimized portfolio vs equal-weight portfolio
+- Benchmark against S&P 500 (SPY)
+- Present results using clear visualizations and analysis
+
