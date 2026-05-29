@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib
-matplotlib.use('Agg')  #need for matplotlib
+#matplotlib.use('Agg')  #need for matplotlib in server
 import matplotlib.pyplot as plt
 import yfinance as yf
 import seaborn as sns
@@ -119,7 +119,56 @@ def run_monte_carlo(returns, avg_returns, risk_free_rate=0.035/252, num_simulati
 
     return mc_returns, mc_volatility, mc_sharpe, mc_weights, best_idx, min_vol_idx
 
-#main api
+#plot frontier
+def frontier(mc_returns, mc_volatility, mc_sharpe, mc_weights, best_idx, min_vol_idx, portfolio_return, portfolio_volatility):
+    plt.figure(figsize=(10, 6))
+
+    scatter = plt.scatter(
+        mc_volatility, 
+        mc_returns, 
+        c=mc_sharpe,
+        cmap="viridis", 
+        alpha=0.5, 
+        s=10
+    )
+    plt.colorbar(scatter, label="Sharpe Ratio")
+
+    plt.scatter(mc_volatility[best_idx], mc_returns[best_idx],
+        color="red", s=200, zorder=5, marker=".", label="Best Sharpe")
+
+    plt.scatter(mc_volatility[min_vol_idx], mc_returns[min_vol_idx],
+        color="blue", s=200, zorder=5, marker=".", label="Min Volatility")
+
+    plt.scatter(portfolio_volatility, portfolio_return,
+        color="white", s=200, zorder=5, marker=".", 
+        edgecolors="black", linewidths=1, label="Equal Weights")
+
+    plt.xlabel("Volatility (Risk)")
+    plt.ylabel("Daily Return")
+    plt.title("Efficient Frontier (Monte Carlo)")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+#optimize portfolio using scipy(uhh idk)
+from scipy.optimize import minimize
+def optimize_portfolio(returns, avg_returns, risk_free_rate=0.035/252):
+    
+    def neg_sharpe(weights):
+        p_return = np.dot(weights, avg_returns)
+        p_volatility = np.sqrt(np.dot(weights.T, np.dot(returns.cov(), weights)))
+        return -(p_return - risk_free_rate) / p_volatility
+
+    constraints = {"type": "eq", "fun": lambda w: np.sum(w) - 1}
+    bounds = [(0, 1) for _ in range(len(avg_returns))]
+    initial_weights = np.array([1/len(avg_returns)] * len(avg_returns))
+
+    result = minimize(neg_sharpe, initial_weights, bounds=bounds, constraints=constraints)
+    
+    return result.x
+
+#___Main___
 def main(tickers, start_date, end_date):
     data, returns, avg_returns, volatility = fetch_data(tickers, start_date, end_date)
     corr = compute_correlation(returns)
@@ -128,6 +177,8 @@ def main(tickers, start_date, end_date):
     mc_returns, mc_volatility, mc_sharpe, mc_weights, best_idx, min_vol_idx = run_monte_carlo(returns, avg_returns)
     optimal_weights = {stock: f"{w*100:.1f}%" for stock, w in zip(tickers, mc_weights[best_idx])}
     distribution = compute_distribution(returns)
+    frontier(mc_returns, mc_volatility, mc_sharpe, mc_weights, best_idx, min_vol_idx, portfolio_return, portfolio_volatility)
+    optimal_weights_scipy = optimize_portfolio(returns, avg_returns)
 
     return {
         "avg_returns": avg_returns.to_dict(),
@@ -136,7 +187,10 @@ def main(tickers, start_date, end_date):
         "portfolio_sharpe": portfolio_sharpe,
         "distribution": distribution,
         "var_table": var_table.to_dict(),
-        "optimal_weights": optimal_weights,
+        "optimal_weights_mc": optimal_weights,
+        "optimal_weights_scipy": {stock: f"{w*100:.1f}%" for stock, w in zip(tickers, optimal_weights_scipy)},
+        "portfolio_return": portfolio_return,
+        "portfolio_volatility": portfolio_volatility,
     }
 
 #──Test──
@@ -155,12 +209,15 @@ print(result["sharpe_ratios"])
 print("\nPortfolio Sharpe:")
 print(result["portfolio_sharpe"])
 
-print("\nOptimal Weights:")
-print(result["optimal_weights"])
-
 print("\nProbability of dropping below -2% in a day:")
 for stock, data in result["distribution"].items():
     print(f"  {stock}: {data['prob_below_threshold']:.2f}%")
 
 print("\nVaR Table:")
 print(result["var_table"])
+
+print("\nOptimal Weights (Monte Carlo):")
+print(result["optimal_weights_mc"])
+
+print("\nOptimal Weights (Scipy):")
+print(result["optimal_weights_scipy"])
