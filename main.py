@@ -153,7 +153,7 @@ def frontier(mc_returns, mc_volatility, mc_sharpe, mc_weights, best_idx, min_vol
 
 #optimize portfolio using scipy(uhh idk)
 from scipy.optimize import minimize
-def optimize_portfolio(returns, avg_returns, risk_free_rate=0.035/252): #daily risk-free rate gotton from Canadian saving interest
+def optimize_portfolio(returns, avg_returns, risk_free_rate = 0.0225 / 252): #daily risk-free rate gotton from Canadian saving interest
     def neg_sharpe(weights):
         p_return = np.dot(weights, avg_returns)
         p_volatility = np.sqrt(np.dot(weights.T, np.dot(returns.cov(), weights)))
