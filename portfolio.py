@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib
-#matplotlib.use('Agg')  #need for matplotlib in server
+matplotlib.use('Agg')  #need for matplotlib in server
 import matplotlib.pyplot as plt
 import yfinance as yf
 import seaborn as sns
@@ -180,17 +180,20 @@ def main(tickers, start_date, end_date):
     optimal_weights_scipy = optimize_portfolio(returns, avg_returns)
 
     return {
-        "avg_returns": avg_returns.to_dict(),
-        "volatility": volatility.to_dict(),
-        "sharpe_ratios": sharpe_ratios.to_dict(),
-        "portfolio_sharpe": portfolio_sharpe,
-        "distribution": distribution,
-        "var_table": var_table.to_dict(),
-        "optimal_weights_mc": optimal_weights,
-        "optimal_weights_scipy": {stock: f"{w*100:.1f}%" for stock, w in zip(tickers, optimal_weights_scipy)},
-        "portfolio_return": portfolio_return,
-        "portfolio_volatility": portfolio_volatility,
-    }
+    "avg_returns": {k: float(v) for k, v in avg_returns.items()},#convert to float for json serialization
+    "volatility": {k: float(v) for k, v in volatility.items()},
+    "sharpe_ratios": {k: float(v) for k, v in sharpe_ratios.items()},
+    "portfolio_sharpe": float(portfolio_sharpe),
+    "portfolio_return": float(portfolio_return),
+    "portfolio_volatility": float(portfolio_volatility),
+    "distribution": distribution,
+    "var_table": {
+        col: {k: float(v) for k, v in vals.items()}
+        for col, vals in var_table.to_dict().items()
+    },
+    "optimal_weights_mc": optimal_weights,
+    "optimal_weights_scipy": {stock: f"{w*100:.1f}%" for stock, w in zip(tickers, optimal_weights_scipy)},
+}
 
 #___Test___
 result = main(
