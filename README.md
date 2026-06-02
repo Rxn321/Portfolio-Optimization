@@ -11,3 +11,10 @@ VaR: On the worst (5%) days, the loss exceed this
 Parametric VaR: VaR estimates using normal distribution
 Expected Shortfall: In the worst (5%) days, this is the avg loss
 Monte carlo vs Scipy optimization: monte carlo assign weights randomly # of times and finds the max sharpe (vs) Scipy calculates equal weights, finds sharpe then moves the weight towards the direction with the higher sharpe 
+
+alpha dicts columns
+    "1. open": "189.30",
+    "2. high": "191.05",
+    "3. low": "188.50",
+    "4. close": "190.25",
+    "5. volume": "52834100"
