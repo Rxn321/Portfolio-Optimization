@@ -4,7 +4,7 @@ from pydantic import BaseModel, validator
 from typing import List
 import numpy as np
 import pandas as pd
-import yfinance as yf
+#import yfinance as yf
 from datetime import datetime, timedelta
 
 from portfolio import main as analyze_portfolio
