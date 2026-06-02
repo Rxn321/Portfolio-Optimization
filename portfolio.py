@@ -8,6 +8,9 @@ import seaborn as sns
 import json
 import io
 import base64
+import requests
+import os
+
 ##Functions based on juptyer notebook, check the notebook for more details and graphs on sections
 
 #convert plot to for react(idk)
@@ -19,13 +22,38 @@ def plot_to_base64():
     plt.close()
     return img
 
-#data
+#data(yfinance limits cloud requests))
+# def fetch_data(tickers, start_date, end_date):
+#     data = yf.download(tickers, start=start_date, end=end_date, progress=False)["Close"]
+#     returns = data.pct_change().dropna()
+#     avg_returns = returns.mean()
+#     volatility = returns.std()
+#     return data, returns, avg_returns, volatility
+
 def fetch_data(tickers, start_date, end_date):
-    data = yf.download(tickers, start=start_date, end=end_date, progress=False)["Close"]
+    api_key = os.getenv("ALPHA_VANTAGE_KEY")
+    all_data = {}
+
+    for ticker in tickers:
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={ticker}&outputsize=full&apikey={api_key}"
+        response = requests.get(url).json()
+
+        if "Time Series (Daily)" not in response:
+            raise ValueError(f"Could not fetch data for {ticker}")
+
+        series = response["Time Series (Daily)"]
+        df = pd.DataFrame.from_dict(series, orient="index")
+        df.index = pd.to_datetime(df.index)
+        df = df.sort_index()
+        df = df[(df.index >= start_date) & (df.index <= end_date)]
+        all_data[ticker] = df["5. adjusted close"].astype(float)
+
+    data = pd.DataFrame(all_data)
     returns = data.pct_change().dropna()
     avg_returns = returns.mean()
     volatility = returns.std()
     return data, returns, avg_returns, volatility
+
 
 #correlation
 def compute_correlation(returns):
