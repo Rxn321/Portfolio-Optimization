@@ -32,21 +32,26 @@ def plot_to_base64():
 
 def fetch_data(tickers, start_date, end_date):
     api_key = os.getenv("ALPHA_VANTAGE_KEY")
+    print(f"API Key exists: {api_key is not None}")
     all_data = {}
 
     for ticker in tickers:
+        print(f"Fetching {ticker}...")
         url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={api_key}"
         response = requests.get(url).json()
+        print(f"{ticker} response keys: {list(response.keys())}")
 
         if "Time Series (Daily)" not in response:
+            print(f"Full response for {ticker}: {response}")
             raise ValueError(f"Could not fetch data for {ticker}")
-
+        
         series = response["Time Series (Daily)"]
         df = pd.DataFrame.from_dict(series, orient="index")
         df.index = pd.to_datetime(df.index)
         df = df.sort_index()
         df = df[(df.index >= start_date) & (df.index <= end_date)]
         all_data[ticker] = df["4. close"].astype(float)
+        print(f"{ticker} fetched successfully — {len(df)} rows")
 
     data = pd.DataFrame(all_data)
     returns = data.pct_change().dropna()
