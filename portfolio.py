@@ -35,7 +35,7 @@ def fetch_data(tickers, start_date, end_date):
     all_data = {}
 
     for ticker in tickers:
-        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={ticker}&outputsize=full&apikey={api_key}"
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={api_key}"
         response = requests.get(url).json()
 
         if "Time Series (Daily)" not in response:
@@ -46,7 +46,7 @@ def fetch_data(tickers, start_date, end_date):
         df.index = pd.to_datetime(df.index)
         df = df.sort_index()
         df = df[(df.index >= start_date) & (df.index <= end_date)]
-        all_data[ticker] = df["5. adjusted close"].astype(float)
+        all_data[ticker] = df["4. close"].astype(float)
 
     data = pd.DataFrame(all_data)
     returns = data.pct_change().dropna()
