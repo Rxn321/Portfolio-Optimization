@@ -1,3 +1,4 @@
+from matplotlib import ticker
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -37,7 +38,7 @@ def fetch_data(tickers, start_date, end_date):
 
     for ticker in tickers:
         print(f"Fetching {ticker}...")
-        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={api_key}"
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=compact&apikey={api_key}"
         response = requests.get(url).json()
         print(f"{ticker} response keys: {list(response.keys())}")
 
