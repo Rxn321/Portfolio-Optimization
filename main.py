@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-from portfolio import main
+from portfolio import main as analyze_portfolio
 
 app = FastAPI()
 
@@ -29,7 +29,7 @@ class PortfolioRequest(BaseModel):
 # ── Main endpoint ─────────────────────────────────────────────
 @app.post("/analyze")
 def analyze(request: PortfolioRequest):
-    result = main(
+    result = analyze_portfolio(
         tickers=request.tickers,
         start_date=request.start_date,
         end_date=request.end_date
