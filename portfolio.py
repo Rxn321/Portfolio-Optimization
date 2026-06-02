@@ -21,7 +21,7 @@ def plot_to_base64():
 
 #data
 def fetch_data(tickers, start_date, end_date):
-    data = yf.download(tickers, start=start_date, end=end_date)["Close"]
+    data = yf.download(tickers, start=start_date, end=end_date, progress=False)["Close"]
     returns = data.pct_change().dropna()
     avg_returns = returns.mean()
     volatility = returns.std()
@@ -196,30 +196,32 @@ def main(tickers, start_date, end_date):
 }
 
 #___Test___
-result = main(
-    tickers=["AAPL", "TSLA", "MSFT", "NVDA"],
-    start_date="2023-01-01",
-    end_date="2025-05-11"
-)
 
-print("Average Returns:")
-print(result["avg_returns"])
+# result = main(
+#     tickers=["AAPL", "TSLA", "MSFT", "NVDA"],
+#     start_date="2023-01-01",
+#     end_date="2025-05-11"
+# )
 
-print("\nSharpe Ratios:")
-print(result["sharpe_ratios"])
+# print("Average Returns:")
+# print(result["avg_returns"])
 
-print("\nPortfolio Sharpe:")
-print(result["portfolio_sharpe"])
+# print("\nSharpe Ratios:")
+# print(result["sharpe_ratios"])
 
-print("\nProbability of dropping below -2% in a day:")
-for stock, data in result["distribution"].items():
-    print(f"  {stock}: {data['prob_below_threshold']:.2f}%")
+# print("\nPortfolio Sharpe:")
+# print(result["portfolio_sharpe"])
 
-print("\nVaR Table:")
-print(result["var_table"])
+# print("\nProbability of dropping below -2% in a day:")
+# for stock, data in result["distribution"].items():
+#     print(f"  {stock}: {data['prob_below_threshold']:.2f}%")
 
-print("\nOptimal Weights (Monte Carlo):")
-print(result["optimal_weights_mc"])
+# print("\nVaR Table:")
+# print(result["var_table"])
 
-print("\nOptimal Weights (Scipy):")
-print(result["optimal_weights_scipy"])
+# print("\nOptimal Weights (Monte Carlo):")
+# print(result["optimal_weights_mc"])
+
+# print("\nOptimal Weights (Scipy):")
+# print(result["optimal_weights_scipy"])
+#
