@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')  #need for matplotlib in server
 import matplotlib.pyplot as plt
-import yfinance as yf
+#import yfinance as yf
 import seaborn as sns
 import json
 import io
