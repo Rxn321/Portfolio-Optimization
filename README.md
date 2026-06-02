@@ -2,7 +2,7 @@
 
 A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation.
 
-Developed as a 2026 summer project. Note: 
+Developed as a 2026 summer project.
 ---
 ## Features
 - Historical stock data ingestion (Alpha Vantage / yFinance notebook version)
@@ -12,7 +12,7 @@ Developed as a 2026 summer project. Note:
 - Sharpe ratio evaluation (asset + portfolio level)
 - Efficient Frontier visualization
 ---
-## 📊 How to Use
+## How to Use
 1. Install dependencies
 -pip install numpy pandas matplotlib seaborn requests scipy
 2. Run the project
