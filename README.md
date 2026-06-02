@@ -1,7 +1,7 @@
 ## 📊 Portfolio Optimization Project
 
-###A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation.
-###Developed as a 2026 summer project.
+### A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation.
+### Developed as a 2026 summer project.
 ---
 ## Features
 - Historical stock data ingestion (Alpha Vantage / yFinance notebook version)
