@@ -12,9 +12,19 @@ Parametric VaR: VaR estimates using normal distribution
 Expected Shortfall: In the worst (5%) days, this is the avg loss
 Monte carlo vs Scipy optimization: monte carlo assign weights randomly # of times and finds the max sharpe (vs) Scipy calculates equal weights, finds sharpe then moves the weight towards the direction with the higher sharpe 
 
-alpha dicts columns
-    "1. open": "189.30",
-    "2. high": "191.05",
-    "3. low": "188.50",
-    "4. close": "190.25",
-    "5. volume": "52834100"
+## Challenges & Solutions
+
+-Yahoo Finance Rate Limiting
+Cloud servers (Render.com) are frequently rate limited by Yahoo Finance's API, 
+returning YFRateLimitError on hosted environments. Resolved by migrating the 
+data ingestion layer from yfinance to Alpha Vantage's REST API, which provides 
+reliable cloud access with proper API key authentication.
+
+-Python Version Compatibility
+Render defaulted to Python 3.14 which had no prebuilt wheels for scipy and numpy. 
+Resolved by pinning Python 3.12.7 via environment variables and aligning all 
+dependency versions to a compatible set.
+
+-Numpy/Scipy Version Conflicts
+scipy==1.15.0 required numpy<1.28.0 which conflicted with other dependencies. 
+Resolved by downgrading to scipy==1.13.1 with numpy==1.26.4.
