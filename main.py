@@ -48,44 +48,23 @@ class PortfolioRequest(BaseModel):
 
         return end_date
 
+
 @app.post("/analyze")
 def analyze(request: PortfolioRequest):
     try:
-        # ── validate tickers exist ────────────────────────────
-        test = yf.download(
-            request.tickers,
-            start=request.start_date,
-            end=request.end_date,
-            progress=False
-        )["Close"]
-
-        if test.empty:
-            raise HTTPException(
-                status_code=400,
-                detail="No data found — check your ticker symbols"
-            )
-
-        # ── check for all NaN ─────────────────────────────────
-        if test.isnull().all().all():
-            raise HTTPException(
-                status_code=400,
-                detail="Data returned all NaN — try different tickers or date range"
-            )
-
-        # ── check invalid tickers ─────────────────────────────
-        invalid = [col for col in test.columns if test[col].isnull().all()]
-        if invalid:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Invalid or unavailable tickers: {invalid}"
-            )
-
         # ── run analysis ──────────────────────────────────────
         result = analyze_portfolio(
             tickers=request.tickers,
             start_date=request.start_date,
             end_date=request.end_date
         )
+
+        # ── check for NaN after analysis ──────────────────────
+        if all(np.isnan(v) for v in result["avg_returns"].values()):
+            raise HTTPException(
+                status_code=400,
+                detail="No data found — check your ticker symbols or date range"
+            )
 
         return result
 
@@ -97,7 +76,7 @@ def analyze(request: PortfolioRequest):
             status_code=500,
             detail=f"Analysis failed: {str(e)}"
         )
-
+    
 @app.get("/")
 def root():
     return {"status": "API is running"}
