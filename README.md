@@ -20,6 +20,14 @@ returning YFRateLimitError on hosted environments. Resolved by migrating the
 data ingestion layer from yfinance to Alpha Vantage's REST API, which provides 
 reliable cloud access with proper API key authentication.
 
+-Alpha Vantage Premium Endpoints
+Initial implementation used `TIME_SERIES_DAILY_ADJUSTED` and `outputsize=full`
+which are premium features. Resolved by switching to last 100 trading days, which is available on the free tier.
+
+-Alpha Vantage Rate Limiting
+Free tier limits requests to 1 per second and 25 per day. Resolved by adding
+a 1 second delay between each ticker request.
+
 -Python Version Compatibility
 Render defaulted to Python 3.14 which had no prebuilt wheels for scipy and numpy. 
 Resolved by pinning Python 3.12.7 via environment variables and aligning all 
