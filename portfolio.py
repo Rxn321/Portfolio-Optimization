@@ -54,7 +54,7 @@ def fetch_data(tickers, start_date, end_date):
         df.index = pd.to_datetime(df.index)
         df = df.sort_index()
         
-        # don't filter by date — just use all available data
+        #use all available data
         all_data[ticker] = df["4. close"].astype(float)
         print(f"{ticker} fetched successfully — {len(df)} rows")
 
@@ -63,7 +63,7 @@ def fetch_data(tickers, start_date, end_date):
     avg_returns = returns.mean()
     volatility = returns.std()
     return data, returns, avg_returns, volatility
-
+    
 
 #correlation
 def compute_correlation(returns):
