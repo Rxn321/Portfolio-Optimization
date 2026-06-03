@@ -20,7 +20,9 @@ result = main(
     tickers=["AAPL", "TSLA", "MSFT", "NVDA"],
     start_date="2023-01-01",
     end_date="2025-05-11"
-3. Or just click this link (check limitations) >>  
+3. Or just check out these links (check limitations T_T) >>
+   [Live Portfolio App](https://project-website-ryantyls-project1.vercel.app)
+   [Backend API](https://portfolio-optimization-3ujx.onrender.com)
 ---
 ## Outputs 
 (Very simple explanations for the outputs, check the Jupyter notebook for more details)
@@ -36,9 +38,9 @@ result = main(
 ## ⚠️ Known Limitations
 (This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so many constraints exist.)
 - Alpha Vantage Free Tier Restrictions
-If the project is run in the site and not run in the Jupyter Notebook environment, the free Alpha Vantage API only provides access to approximately the most recent 100 trading days of data. Historical data beyond this range requires a premium plan.
+Only allows 25 requests/month
 - Alpha Vantage Free Tier Restrictions
-Only allows 5 requests/min
+If the project is run on the site and not run in the Jupyter Notebook environment, the free Alpha Vantage API only provides access to approximately the most recent 100 trading days of data. Historical data beyond this range requires a premium plan.
 - Backend Cold Start Delay (Render Free tier)
 When deployed on Render, the backend service may take approximately 20–30 seconds to spin up after periods of inactivity.
 
