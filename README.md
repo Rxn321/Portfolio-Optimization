@@ -34,9 +34,11 @@ result = main(
 - Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly # of times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
 ---
 ## ⚠️ Known Limitations
-(This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so certain constraints exist that reflect real-world deployment trade-offs.)
+(This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so many constraints exist.)
 - Alpha Vantage Free Tier Restrictions
 If the project is run in the site and not run in the Jupyter Notebook environment, the free Alpha Vantage API only provides access to approximately the most recent 100 trading days of data. Historical data beyond this range requires a premium plan.
+- Alpha Vantage Free Tier Restrictions
+Only allows 5 requests/min
 - Backend Cold Start Delay (Render Free tier)
 When deployed on Render, the backend service may take approximately 20–30 seconds to spin up after periods of inactivity.
 
@@ -46,8 +48,7 @@ When deployed on Render, the backend service may take approximately 20–30 seco
 -Yahoo Finance Rate Limiting
 Cloud servers (Render.com) are frequently rate-limited by Yahoo Finance's API, 
 returning YFRateLimitError on hosted environments. Resolved by migrating the 
-data ingestion layer from yfinance to Alpha Vantage's REST API, which provides 
-reliable cloud access with proper API key authentication.
+data ingestion layer from yfinance to Alpha Vantage's REST API for finance data.
 
 -Alpha Vantage Premium Endpoints
 Initial implementation used `TIME_SERIES_DAILY_ADJUSTED` and `outputsize=full`
