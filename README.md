@@ -48,8 +48,7 @@ When deployed on Render, the backend service may take approximately 20–30 seco
 -Yahoo Finance Rate Limiting
 Cloud servers (Render.com) are frequently rate-limited by Yahoo Finance's API, 
 returning YFRateLimitError on hosted environments. Resolved by migrating the 
-data ingestion layer from yfinance to Alpha Vantage's REST API, which provides 
-reliable cloud access with proper API key authentication.
+data ingestion layer from yfinance to Alpha Vantage's REST API for finance data.
 
 -Alpha Vantage Premium Endpoints
 Initial implementation used `TIME_SERIES_DAILY_ADJUSTED` and `outputsize=full`
