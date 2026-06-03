@@ -14,14 +14,15 @@
 ## How to Use
 1. Install dependencies
 -pip install numpy pandas matplotlib seaborn requests scipy
-2. Run the project
+2. If running with Jupyter notebook, just change the tickers and date 
+3. If running with py
 from your_file_name import main
 result = main(
     tickers=["AAPL", "TSLA", "MSFT", "NVDA"],
     start_date="2023-01-01",
     end_date="2025-05-11"
-3. Or just check out these links (check limitations T_T) >>
-   [Live Portfolio App](https://project-website-ryantyls-project1.vercel.app)
+4. Or just check out these links (check limitations T_T) >>
+   [Live Portfolio App](https://project-website-vercel-git-main-ryantyls-project1.vercel.app)
    [Backend API](https://portfolio-optimization-3ujx.onrender.com)
 ---
 ## Outputs 
