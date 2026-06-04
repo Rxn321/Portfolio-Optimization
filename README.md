@@ -26,7 +26,7 @@
 - Expected Shortfall: In the worst (5%) days, this is the avg loss
 - Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly 10k times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
 ---
-Streamlit came in and saved the day
+Streamlit came in and saved the day...
 ~~## ⚠️ Known Limitations~~
 ~~(This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so many constraints exist.)~~
 ~~- Alpha Vantage Free Tier Restrictions~~
