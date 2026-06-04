@@ -11,7 +11,7 @@ st.title("Portfolio Optimization Dashboard")
 
 # example
 tickers_input = st.text_input(
-    "Tickers (space separated)\t syntax: ticker.exhange suffix, e.g. AAPL for US stocks, RY.TO for Canadian stocks)",
+    "Tickers\t (Space separated & Syntax: ticker.exhange suffix, e.g. AAPL for US stocks, RY.TO for Canadian stocks)",
     "RY.TO SU.TO MSFT.TO VFV.TO SHOP.TO WFG.TO"
 )
 
