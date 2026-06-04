@@ -26,12 +26,12 @@
 - Expected Shortfall: In the worst (5%) days, this is the avg loss
 - Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly 10k times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
 ---
-Streamlit came in and saved the day...
+Streamlit came in and saved the day ...
 ~~## ⚠️ Known Limitations~~
 ~~(This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so many constraints exist.)~~
 ~~- Alpha Vantage Free Tier Restrictions~~
 ~~Only allows 25 requests/month~~
 ~~- Alpha Vantage Free Tier Restrictions~~
-~~If the project is run on the site and not run in the Jupyter Notebook environment, the free Alpha Vantage API only provides access to approximately the ~~most recent 100 trading days of data. Historical data beyond this range requires a premium plan.~~
+~~If the project is run on the site and not run in the Jupyter Notebook environment, the free Alpha Vantage API only provides access to approximately the~~ ~~most recent 100 trading days of data. Historical data beyond this range requires a premium plan.~~
 ~~- Backend Cold Start Delay (Render Free tier)~~
 ~~When deployed on Render, the backend service may take approximately 20–30 seconds to spin up after periods of inactivity.~~
