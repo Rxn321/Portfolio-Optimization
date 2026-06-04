@@ -89,7 +89,7 @@ if run:
         r = np.dot(w, avg_returns)
         v = np.sqrt(np.dot(w.T, np.dot(cov_matrix, w)))
 
-        # ADDED (Option B): penalty for concentration - prevents extreme 0% / 100% weights
+        # ADDED penalty for concentration: prevents extreme 0% / 100% weights DIVERSIFICATIONNN
 
         penalty = 0.01 * np.sum(w**2)
 
@@ -97,7 +97,7 @@ if run:
 
 
 
-    # ADDED (Option A): diversification constraint - forces minimum exposure per asset
+    # ADDED diversification constraint: forces minimum exposure per asset DIVERSIFICATIONNN
 
     bounds = [(0.05, 0.4)] * len(tickers)
 
@@ -244,7 +244,7 @@ if run:
 
     # Max Sharpe Portfolio (SciPy)
     st.subheader("Max Sharpe Portfolio (SciPy)")
-
+    st.markdown("minimum allocation floor of 5%")
     for t, w in zip(tickers, opt_w):
         st.write(f"{t}: {w:.2%}")
 
