@@ -12,7 +12,7 @@ st.title("Portfolio Optimization Dashboard")
 # example
 tickers_input = st.text_input(
     "Tickers\t (Space separated & Syntax: ticker.exhange suffix, e.g. AAPL for US stocks, RY.TO for Canadian stocks)",
-    "RY.TO SU.TO MSFT.TO VFV.TO SHOP.TO WFG.TO"
+    "RY.TO MSFT.TO SHOP.TO WFG.TO"
 )
 
 # input
@@ -22,6 +22,29 @@ end_date = st.date_input("End Date")
 run = st.button("Run Analysis")
 
 if run:
+    # error handling for data
+    try:
+        tickers = [t.strip().upper() for t in tickers_input.split() if t.strip()]
+
+        if len(tickers) == 0:
+            st.error("Please enter at least one ticker.")
+            st.stop()
+
+        data = yf.download(tickers, start=start_date, end=end_date)["Close"]
+
+        if data.empty:
+            st.error("No data returned. Check tickers or date range.")
+            st.stop()
+
+        returns = data.pct_change().dropna()
+
+        if returns.empty:
+            st.error("Not enough data to compute returns.")
+            st.stop()
+
+    except Exception as e:
+        st.error(f"Data loading failed: {e}")
+        st.stop()
 
     # data
     tickers = tickers_input.split()
