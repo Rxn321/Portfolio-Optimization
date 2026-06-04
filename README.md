@@ -13,7 +13,7 @@
 ---
 ## How to Use
 1. Install dependencies
--pip install numpy pandas matplotlib seaborn requests scipy
+-pip install -r requirements.txt
 2. Run the project
 from your_file_name import main
 result = main(
@@ -33,7 +33,7 @@ result = main(
 - VaR: On the worst (5%) days, the loss exceeds this
 - Parametric VaR: VaR estimates using normal distribution
 - Expected Shortfall: In the worst (5%) days, this is the avg loss
-- Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly # of times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
+- Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly 10k times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
 ---
 ## ⚠️ Known Limitations
 (This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so many constraints exist.)
