@@ -11,7 +11,7 @@ st.set_page_config(page_title="Portfolio Optimizer", layout="wide")
 st.title("Portfolio Optimizer")
 
 # Example
-tickers_input = st.text_input("Tickers (space separated)", "RY.TO", "SU.TO", "MSFT.TO", "NKE.TO", "VFV.TO", "SHOP.TO", "WFG.TO")
+tickers_input = st.text_input("Tickers (space separated)", "RY.TO SU.TO MSFT.TO NKE.TO VFV.TO SHOP.TO WFG.TO")
 start_date = st.date_input("Start Date")
 end_date = st.date_input("End Date")
 
