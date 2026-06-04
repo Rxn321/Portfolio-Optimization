@@ -5,6 +5,7 @@
 ---
 ## How to Use
 1. Just click this: [Live Portfolio App](https://portfolio-optimization-ryanliu.streamlit.app/)
+- Important: Make sure the date is correct
 ---
 ## Features
 - Historical stock data ingestion (Alpha Vantage / yFinance notebook version)
