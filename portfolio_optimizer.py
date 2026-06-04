@@ -80,8 +80,20 @@ if run:
 
     # Heatmap
     st.subheader("Correlation Heatmap")
-    fig_corr, ax_corr = plt.subplots()
-    sns.heatmap(returns.corr(), annot=True, cmap="coolwarm", ax=ax_corr)
+    fig_corr, ax_corr = plt.subplots(figsize=(8, 6))
+
+    sns.heatmap(
+        returns.corr(),
+        annot=True,
+        fmt=".2f",
+        cmap="coolwarm",
+        vmin=-1,# force full correlation range
+        vmax=1,
+        center=0, 
+        square=True,
+        ax=ax_corr
+    )
+
     st.pyplot(fig_corr)
 
     # Max Sharpe Portfolio
