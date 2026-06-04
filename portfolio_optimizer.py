@@ -1,3 +1,7 @@
+#Shoutout streamlit for saving the project and yfinance for providing the data. This is a simple portfolio optimization dashboard built with Streamlit 
+#that allows users to input stock tickers, select a date range, and visualize the efficient frontier along with key metrics like returns, volatility, 
+#and Sharpe ratio. The app also includes error handling for data loading and validation to ensure a smooth user experience.
+
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -92,7 +96,7 @@ if run:
     opt_r = np.dot(opt_w, avg_returns)
     opt_v = np.sqrt(np.dot(opt_w.T, np.dot(cov_matrix, opt_w)))
     opt_sharpe = (opt_r - risk_free_rate) / opt_v
-    
+
     #Validation
     valid_tickers = returns.columns.tolist()
 
