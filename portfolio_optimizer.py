@@ -254,29 +254,39 @@ if run:
 
     st.pyplot(fig)
 
-    # Max Sharpe Portfolio (Monte Carlo)
-    st.subheader("Best Sharpe Portfolio (Monte Carlo)")
 
+#Best Sharpe Portfolio (Monte Carlo) vs Max Sharpe Portfolio (SciPy)
+    col1, col2 = st.columns(2)
     best_mc_w = weights_list[best_idx]
+    
+    with col1:
+        st.subheader("Best Sharpe Portfolio (Monte Carlo)")
 
-    for t, w in zip(valid_tickers, best_mc_w):
-        st.write(f"{t}: {w:.2%}")
+        mc_df = pd.DataFrame({
+            "Weight": [f"{w:.2%}" for w in best_mc_w]
+        }, index=valid_tickers)
 
-    st.write({
-        "Return": results[best_idx, 0],
-        "Volatility": results[best_idx, 1],
-        "Sharpe": results[best_idx, 2]
-    })
+        st.dataframe(mc_df, use_container_width=True)
 
-    # Max Sharpe Portfolio (SciPy)
-    st.subheader("Max Sharpe Portfolio (SciPy)")
-    st.markdown("Note: The minimum allocation floor is 5%")
+        st.write({
+            "Return": results[best_idx, 0],
+            "Volatility": results[best_idx, 1],
+            "Sharpe": results[best_idx, 2]
+        })
 
-    for t, w in zip(tickers, opt_w):
-        st.write(f"{t}: {w:.2%}")
+    with col2:
+        st.subheader("Max Sharpe Portfolio (SciPy)")
 
-    st.write({
-        "Return": opt_r,
-        "Volatility": opt_v,
-        "Sharpe": opt_sharpe
-    })
+        scipy_df = pd.DataFrame({
+            "Weight": [f"{w:.2%}" for w in opt_w]
+        }, index=tickers)
+
+        st.dataframe(scipy_df, use_container_width=True)
+
+        st.caption("Minimum allocation floor: 5%")
+
+        st.write({
+            "Return": opt_r,
+            "Volatility": opt_v,
+            "Sharpe": opt_sharpe
+        })
