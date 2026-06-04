@@ -133,7 +133,6 @@ if run:
     if len(valid_tickers) == 0:
         st.error("No valid tickers with usable data.")
         st.stop()
-    st.divider()
     # Risk
     st.subheader("Risk Insights")
 
