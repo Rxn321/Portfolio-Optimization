@@ -158,7 +158,7 @@ if run:
     st.subheader("Efficient Frontier")
 
     try:
-        sims = 10000
+        sims = 10000 #change this for more/less points on the frontier (tradeoff between accuracy and speed)
         results = []
         weights_list = []
 
@@ -266,6 +266,8 @@ if run:
         }, index=valid_tickers)
 
         st.dataframe(mc_df, use_container_width=True)
+        
+        st.caption("Number of simulations: " + str(sims))
 
         st.write({
             "Return": results[best_idx, 0],
