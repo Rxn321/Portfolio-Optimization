@@ -69,7 +69,15 @@ if run:
     opt_r = np.dot(opt_w, avg_returns)
     opt_v = np.sqrt(np.dot(opt_w.T, np.dot(cov_matrix, opt_w)))
     opt_sharpe = (opt_r - risk_free_rate) / opt_v
+    
+    # Risk
+    st.subheader("Risk Insights")
 
+    threshold = -0.02
+
+    for t in tickers:
+        prob = (returns[t] < threshold).mean() * 100
+        st.write(f"{t}: {prob:.2f}% chance of -2% drop")
     # Efficient Frontier
     st.subheader("Efficient Frontier")
 
@@ -166,12 +174,3 @@ if run:
         "Volatility": opt_v,
         "Sharpe": opt_sharpe
     })
-
-    # Example
-    st.subheader("Risk Insights")
-
-    threshold = -0.02
-
-    for t in tickers:
-        prob = (returns[t] < threshold).mean() * 100
-        st.write(f"{t}: {prob:.2f}% chance of -2% drop")
