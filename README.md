@@ -3,6 +3,9 @@
 ### A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation.
 ### Developed as a 2026 summer project.
 ---
+## How to Use
+1. Just click this: [Live Portfolio App](https://portfolio-optimization-ryanliu.streamlit.app/)
+---
 ## Features
 - Historical stock data ingestion (Alpha Vantage / yFinance notebook version)
 - Return, volatility, and correlation analysis
@@ -10,9 +13,6 @@
 - Risk modeling (VaR + Expected Shortfall)
 - Sharpe ratio evaluation (asset + portfolio level)
 - Efficient Frontier visualization
----
-## How to Use
-1. Just click this: [Live Portfolio App](https://portfolio-optimization-ryanliu.streamlit.app/)
 ---
 ## Outputs 
 (Very simple explanations for the outputs, check the Jupyter notebook for more details)
@@ -25,7 +25,7 @@
 - Expected Shortfall: In the worst (5%) days, this is the avg loss
 - Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly 10k times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
 ---
-
+Streamlit came in and saved the day
 ~~## ⚠️ Known Limitations~~
 ~~(This project was built as a learning-focused implementation using free-tier infrastructure and APIs, so many constraints exist.)~~
 ~~- Alpha Vantage Free Tier Restrictions~~
