@@ -1,6 +1,7 @@
 ## 📊 Portfolio Optimization Project
 
-### A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation.
+### A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation. This project is not about selecting the best stocks individually, it finds the best combination of assets to maximize diversity and Sharpe ratio
+
 ### Developed as a 2026 summer project.
 ---
 ## How to Use
@@ -25,6 +26,7 @@
 - Parametric VaR: VaR estimates using normal distribution
 - Expected Shortfall: In the worst (5%) days, this is the avg loss
 - Monte Carlo vs Scipy optimization: Monte Carlo assigns weights randomly 10k times and finds the max Sharpe (vs) Scipy calculates equal weights, finds the Sharpe, then moves the weight towards the direction with the higher Sharpe 
+- Max Sharpe Portfolio: The calculated Max Sharpe portfolio often concentrates weights in a small number of assets, resulting in high allocations to a few stocks and near-zero weights for others. As a result, under unconstrained optimization, the model may favor a limited set of stocks that dominate the portfolio’s Sharpe ratio. So minimum and maximum weight limits is enforced across assets for balancing/diversification.
 ---
 Streamlit came in and saved the day ...
 ~~## ⚠️ Known Limitations~~
