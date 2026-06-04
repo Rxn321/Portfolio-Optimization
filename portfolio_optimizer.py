@@ -98,33 +98,55 @@ if run:
 
     threshold = -0.02
 
-    probs = {
-        t: (returns[t] < threshold).mean() * 100
-        for t in tickers
-    }
+    probs = {}
+
+    for t in valid_tickers:
+        try:
+            probs[t] = (returns[t] < threshold).mean() * 100
+        except Exception:
+            probs[t] = np.nan
 
     probs_sorted = sorted(probs.items(), key=lambda x: x[1], reverse=True)
 
     for t, prob in probs_sorted:
-        st.write(f"{t}: {prob:.2f}% chance of -2% drop")
-        
+        if np.isnan(prob):
+            st.write(f"{t}: insufficient data")
+        else:
+            st.write(f"{t}: {prob:.2f}% chance of -2% drop")
+
     # Efficient Frontier
     st.subheader("Efficient Frontier")
 
-    sims = 10000
-    results = []
-    weights_list = []
+    try:
+        sims = 10000
+        results = []
+        weights_list = []
 
-    for _ in range(sims):
-        w = np.random.random(len(tickers))
-        w = w / np.sum(w)
+        for _ in range(sims):
+            w = np.random.random(len(valid_tickers))
+            w = w / np.sum(w)
 
-        r = np.dot(w, avg_returns)
-        v = np.sqrt(np.dot(w.T, np.dot(cov_matrix, w)))
-        s = (r - risk_free_rate) / v
+            r = np.dot(w, avg_returns)
+            v = np.sqrt(np.dot(w.T, np.dot(cov_matrix, w)))
 
-        results.append([r, v, s])
-        weights_list.append(w)
+            if v == 0 or np.isnan(v):
+                continue
+
+            s = (r - risk_free_rate) / v
+
+            results.append([r, v, s])
+            weights_list.append(w)
+
+        if len(results) == 0:
+            st.error("Monte Carlo failed (check tickers/data quality).")
+            st.stop()
+
+        results = np.array(results)
+        weights_list = np.array(weights_list)
+
+    except Exception as e:
+        st.error(f"Efficient frontier error: {e}")
+        st.stop()
 
     results = np.array(results)
 
