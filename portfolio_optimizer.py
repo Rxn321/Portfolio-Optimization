@@ -11,8 +11,8 @@ st.title("Portfolio Optimization Dashboard")
 
 # example
 tickers_input = st.text_input(
-    "Tickers (space separated)",
-    "RY.TO SU.TO MSFT.TO NKE.TO VFV.TO SHOP.TO WFG.TO"
+    "Tickers (space separated)\t syntax: ticker.exhange suffix, e.g. AAPL for US stocks, RY.TO for Canadian stocks)",
+    "RY.TO SU.TO MSFT.TO VFV.TO SHOP.TO WFG.TO"
 )
 
 # input
@@ -69,15 +69,22 @@ if run:
     opt_r = np.dot(opt_w, avg_returns)
     opt_v = np.sqrt(np.dot(opt_w.T, np.dot(cov_matrix, opt_w)))
     opt_sharpe = (opt_r - risk_free_rate) / opt_v
-    
+
     # Risk
     st.subheader("Risk Insights")
 
     threshold = -0.02
 
-    for t in tickers:
-        prob = (returns[t] < threshold).mean() * 100
+    probs = {
+        t: (returns[t] < threshold).mean() * 100
+        for t in tickers
+    }
+
+    probs_sorted = sorted(probs.items(), key=lambda x: x[1], reverse=True)
+
+    for t, prob in probs_sorted:
         st.write(f"{t}: {prob:.2f}% chance of -2% drop")
+        
     # Efficient Frontier
     st.subheader("Efficient Frontier")
 
