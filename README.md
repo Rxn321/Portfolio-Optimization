@@ -6,7 +6,8 @@
 ---
 ## How to Use
 1. Just click this: [Live Portfolio App](https://portfolio-optimization-ryanliu.streamlit.app/)
-- Important: Please follow the syntax: ticker. + exchange suffix separated by space, e.g. (AAPL TSLA) for US stocks, (RY.TO MSFT.TO) for Canadian stocks. Also make sure the date is correct
+- ⚠️Important: Please follow the syntax: ticker. + exchange suffix separated by space, e.g. (AAPL TSLA) for US stocks, (RY.TO MSFT.TO) for Canadian stocks. Also make sure the date is correct
+- ⚠️Disclaimer: For educational use only. Not financial advice. Results are based on historical data.
 ---
 ## Features
 - Historical stock data ingestion (Alpha Vantage / yFinance notebook version)
