@@ -290,3 +290,5 @@ if run:
             "Volatility": opt_v,
             "Sharpe": opt_sharpe
         })
+
+st.caption("Developed by Ryan Liu - 2026")
