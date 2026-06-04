@@ -43,7 +43,7 @@ if run:
         returns = data.pct_change().dropna()
 
         if returns.empty:
-            st.error("Contains invalid data, failed to compute returns. Check tickers.")
+            st.error("Contains invalid data, failed to compute returns. Check date range or tickers")
             st.stop()
 
     except Exception as e:
@@ -78,6 +78,7 @@ if run:
     })
     st.dataframe(metrics)
     st.divider()
+
     # Heatmap
     st.subheader("Correlation Heatmap")
     fig_corr, ax_corr = plt.subplots(figsize=(8, 6))
@@ -110,7 +111,6 @@ if run:
 
 
     # ADDED diversification constraint: forces minimum exposure per asset DIVERSIFICATIONNN
-
     bounds = [(0.05, 0.4)] * len(tickers)
 
     constraints = {
@@ -133,6 +133,7 @@ if run:
     if len(valid_tickers) == 0:
         st.error("No valid tickers with usable data.")
         st.stop()
+
     # Risk
     st.subheader("Risk Insights")
 
@@ -154,6 +155,35 @@ if run:
         else:
             st.write(f"{t}: {prob:.2f}% chance of -2% drop")
     st.divider()
+
+    #Expected Shortfall
+    st.subheader("Expected Shortfall (CVaR 95%)")
+
+    alpha = 0.05  # 5% worst cases
+
+    es = {}
+
+    for t in valid_tickers:
+        try:
+            asset_returns = returns[t].dropna()
+
+            # worst 5% returns
+            var_threshold = np.quantile(asset_returns, alpha)
+
+            # expected shortfall = mean of worst 5%
+            es[t] = asset_returns[asset_returns <= var_threshold].mean() * 100
+
+        except Exception:
+            es[t] = np.nan
+
+    es_sorted = sorted(es.items(), key=lambda x: x[1])
+
+    for t, val in es_sorted:
+        if np.isnan(val):
+            st.write(f"{t}: insufficient data")
+        else:
+            st.write(f"{t}: {val:.2f}%")
+
     # Efficient Frontier
     st.subheader("Efficient Frontier")
 
