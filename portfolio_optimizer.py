@@ -92,6 +92,17 @@ if run:
     opt_r = np.dot(opt_w, avg_returns)
     opt_v = np.sqrt(np.dot(opt_w.T, np.dot(cov_matrix, opt_w)))
     opt_sharpe = (opt_r - risk_free_rate) / opt_v
+    
+    #Validation
+    valid_tickers = returns.columns.tolist()
+
+    if len(valid_tickers) == 0:
+        st.error("No valid tickers with usable data.")
+        st.stop()
+
+    avg_returns = returns.mean()
+    volatility = returns.std()
+    cov_matrix = returns.cov()
 
     # Risk
     st.subheader("Risk Insights")
