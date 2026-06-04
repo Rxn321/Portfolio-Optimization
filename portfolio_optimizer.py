@@ -99,8 +99,6 @@ if run:
 
     res = minimize(neg_sharpe, init, bounds=bounds, constraints=constraints)
     opt_w = res.x
-
-    st.subheader("Optimal Portfolio (Max Sharpe)")
     opt_w = res.x
     opt_r = np.dot(opt_w, avg_returns)
     opt_v = np.sqrt(np.dot(opt_w.T, np.dot(cov_matrix, opt_w)))
@@ -167,7 +165,12 @@ if run:
     ax.grid(True)
 
     st.pyplot(fig)
-
+    
+    # Best Sharpe Portfolio
+    st.subheader("Best Sharpe Portfolio (Optimized)")
+    print(f"Best Sharpe (SciPy): {opt_sharpe:.4f}")
+    print(f"Return: {opt_r:.4f}")
+    print(f"Volatility: {opt_v:.4f}")
 
     # Risk
     st.subheader("Risk Insights (VaR + Probability)")
