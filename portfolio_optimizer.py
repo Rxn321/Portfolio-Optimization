@@ -244,7 +244,7 @@ if run:
 
     # Max Sharpe Portfolio (SciPy)
     st.subheader("Max Sharpe Portfolio (SciPy)")
-    st.markdown("minimum allocation floor of 5%")
+    st.markdown("Note: The minimum allocation floor is 5%")
     for t, w in zip(tickers, opt_w):
         st.write(f"{t}: {w:.2%}")
 
