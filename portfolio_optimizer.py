@@ -77,7 +77,7 @@ if run:
         "Sharpe": (avg_returns - risk_free_rate) / (volatility * np.sqrt(252))
     })
     st.dataframe(metrics)
-
+    st.divider()
     # Heatmap
     st.subheader("Correlation Heatmap")
     fig_corr, ax_corr = plt.subplots(figsize=(8, 6))
@@ -133,7 +133,7 @@ if run:
     if len(valid_tickers) == 0:
         st.error("No valid tickers with usable data.")
         st.stop()
-
+    st.divider()
     # Risk
     st.subheader("Risk Insights")
 
@@ -154,7 +154,7 @@ if run:
             st.write(f"{t}: insufficient data")
         else:
             st.write(f"{t}: {prob:.2f}% chance of -2% drop")
-
+    st.divider()
     # Efficient Frontier
     st.subheader("Efficient Frontier")
 
