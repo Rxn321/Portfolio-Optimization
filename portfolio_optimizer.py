@@ -37,13 +37,13 @@ if run:
         data = yf.download(tickers, start=start_date, end=end_date)["Close"]
 
         if data.empty:
-            st.error("No data returned. Check tickers or date range.")
+            st.error("No data returned. Check date range or tickers.")
             st.stop()
 
         returns = data.pct_change().dropna()
 
         if returns.empty:
-            st.error("Not enough data to compute returns.")
+            st.error("Contains invalid data, failed to compute returns. Check tickers.")
             st.stop()
 
     except Exception as e:
