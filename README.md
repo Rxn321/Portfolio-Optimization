@@ -35,4 +35,3 @@ Streamlit came in and saved the day
 ~~If the project is run on the site and not run in the Jupyter Notebook environment, the free Alpha Vantage API only provides access to approximately the ~~most recent 100 trading days of data. Historical data beyond this range requires a premium plan.~~
 ~~- Backend Cold Start Delay (Render Free tier)~~
 ~~When deployed on Render, the backend service may take approximately 20–30 seconds to spin up after periods of inactivity.~~
-Streamlit came in and saved the day
