@@ -254,9 +254,24 @@ if run:
 
     st.pyplot(fig)
 
+    # Max Sharpe Portfolio (Monte Carlo)
+    st.subheader("Best Sharpe Portfolio (Monte Carlo)")
+
+    best_mc_w = weights_list[best_idx]
+
+    for t, w in zip(valid_tickers, best_mc_w):
+        st.write(f"{t}: {w:.2%}")
+
+    st.write({
+        "Return": results[best_idx, 0],
+        "Volatility": results[best_idx, 1],
+        "Sharpe": results[best_idx, 2]
+    })
+
     # Max Sharpe Portfolio (SciPy)
     st.subheader("Max Sharpe Portfolio (SciPy)")
     st.markdown("Note: The minimum allocation floor is 5%")
+
     for t, w in zip(tickers, opt_w):
         st.write(f"{t}: {w:.2%}")
 
