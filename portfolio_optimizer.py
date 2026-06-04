@@ -16,7 +16,7 @@ st.title("Portfolio Optimization Dashboard")
 # example
 tickers_input = st.text_input(
     "Tickers\t (Space separated & Syntax: ticker.exhange suffix, e.g. AAPL for US stocks, RY.TO for Canadian stocks)",
-    "RY.TO TD.TO SHOP.TO BCE.TO ENB.TO MSFT.TO CNR.TO CAE.TO"
+    "RY.TO TD.TO SHOP.TO BCE.TO ENB.TO CNR.TO CAE.TO"
 )
 
 # input
@@ -50,8 +50,8 @@ if run:
         st.error(f"Data loading failed: {e}")
         st.stop()
 
-    # data
-    tickers = tickers_input.split()
+    tickers = list(returns.columns)
+
     data = yf.download(tickers, start=start_date, end=end_date)["Close"]
     returns = data.pct_change().dropna()
 
@@ -59,7 +59,11 @@ if run:
     volatility = returns.std()
     cov_matrix = returns.cov()
 
-    risk_free_rate = 0.0225 / 252
+# risk-free rate (example: Canadian 3-month Treasury bill - i just googled this)
+    risk_free_rate = 0.0229
+
+    avg_returns = avg_returns * 252
+    cov_matrix = cov_matrix * 252
 
     # Overview
     st.subheader("Price Overview")
@@ -69,8 +73,8 @@ if run:
     st.subheader("Returns Summary")
     metrics = pd.DataFrame({
         "Return": avg_returns,
-        "Volatility": volatility,
-        "Sharpe": (avg_returns - risk_free_rate) / volatility
+        "Volatility": volatility * np.sqrt(252),
+        "Sharpe": (avg_returns - risk_free_rate) / (volatility * np.sqrt(252))
     })
     st.dataframe(metrics)
 
@@ -84,10 +88,24 @@ if run:
     def neg_sharpe(w):
         r = np.dot(w, avg_returns)
         v = np.sqrt(np.dot(w.T, np.dot(cov_matrix, w)))
-        return -(r - risk_free_rate) / v
 
-    constraints = {"type": "eq", "fun": lambda w: np.sum(w) - 1}
-    bounds = [(0, 1)] * len(tickers)
+        # ADDED (Option B): penalty for concentration - prevents extreme 0% / 100% weights
+
+        penalty = 0.01 * np.sum(w**2)
+
+        return -((r - risk_free_rate) / v) + penalty
+
+
+
+    # ADDED (Option A): diversification constraint - forces minimum exposure per asset
+
+    bounds = [(0.05, 0.4)] * len(tickers)
+
+    constraints = {
+        "type": "eq",
+        "fun": lambda w: np.sum(w) - 1
+    }
+
     init = np.array([1 / len(tickers)] * len(tickers))
 
     res = minimize(neg_sharpe, init, bounds=bounds, constraints=constraints)
@@ -103,10 +121,6 @@ if run:
     if len(valid_tickers) == 0:
         st.error("No valid tickers with usable data.")
         st.stop()
-
-    avg_returns = returns.mean()
-    volatility = returns.std()
-    cov_matrix = returns.cov()
 
     # Risk
     st.subheader("Risk Insights")
@@ -162,8 +176,6 @@ if run:
     except Exception as e:
         st.error(f"Efficient frontier error: {e}")
         st.stop()
-
-    results = np.array(results)
 
     best_idx = np.argmax(results[:, 2])
     min_idx = np.argmin(results[:, 1])
