@@ -87,57 +87,6 @@ if run:
 
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # All portfolios (efficient frontier cloud)
-    scatter = ax.scatter(
-        results[:, 1],
-        results[:, 0],
-        c=results[:, 2],
-        cmap="viridis",
-        s=10,
-        alpha=0.6
-    )
-
-    plt.colorbar(scatter, ax=ax, label="Sharpe Ratio")
-
-    # ⭐ Best Sharpe
-    ax.scatter(
-        results[best_idx, 1],
-        results[best_idx, 0],
-        color="red",
-        s=250,
-        marker="*",
-        label="Best Sharpe"
-    )
-
-    # 🔵 Min Volatility
-    ax.scatter(
-        results[min_idx, 1],
-        results[min_idx, 0],
-        color="blue",
-        s=200,
-        marker="o",
-        label="Min Volatility"
-    )
-
-    # ⚪ Equal weight
-    ax.scatter(
-        eq_v,
-        eq_r,
-        color="white",
-        edgecolors="black",
-        s=200,
-        marker="o",
-        label="Equal Weight"
-    )
-
-    ax.set_xlabel("Volatility (Risk)")
-    ax.set_ylabel("Return")
-    ax.set_title("Efficient Frontier (Monte Carlo Simulation)")
-    ax.legend()
-    ax.grid(True)
-
-    st.pyplot(fig)
-
     # Scipy Optimized Portfolio
     def neg_sharpe(w):
         r = np.dot(w, avg_returns)
@@ -157,8 +106,50 @@ if run:
     opt_v = np.sqrt(np.dot(opt_w.T, np.dot(cov_matrix, opt_w)))
     opt_s = (opt_r - risk_free_rate) / opt_v
     
-    #Max Sharpe (SciPy optimized portfolio)
 
+    # All portfolios (efficient frontier cloud)
+    scatter = ax.scatter(
+        results[:, 1],
+        results[:, 0],
+        c=results[:, 2],
+        cmap="viridis",
+        s=10,
+        alpha=0.6
+    )
+
+    plt.colorbar(scatter, ax=ax, label="Sharpe Ratio")
+
+    # Best Sharpe (Monte Carlo)
+    ax.scatter(
+        results[best_idx, 1],
+        results[best_idx, 0],
+        color="red",
+        s=250,
+        marker="*",
+        label="Best Sharpe"
+    )
+
+    # Min Volatility
+    ax.scatter(
+        results[min_idx, 1],
+        results[min_idx, 0],
+        color="blue",
+        s=200,
+        marker="o",
+        label="Min Volatility"
+    )
+
+    # Equal weight
+    ax.scatter(
+        eq_v,
+        eq_r,
+        color="white",
+        edgecolors="black",
+        s=200,
+        marker="o",
+        label="Equal Weight"
+    )
+    # Best Sharpe (Optimized)
     ax.scatter(
     opt_v,
     opt_r,
@@ -167,6 +158,16 @@ if run:
     marker="*",
     label="Max Sharpe (Optimized)"
     )
+
+
+    ax.set_xlabel("Volatility (Risk)")
+    ax.set_ylabel("Return")
+    ax.set_title("Efficient Frontier (Monte Carlo Simulation)")
+    ax.legend()
+    ax.grid(True)
+
+    st.pyplot(fig)
+
 
     # Risk
     st.subheader("Risk Insights (VaR + Probability)")
