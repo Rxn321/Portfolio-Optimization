@@ -1,6 +1,6 @@
 ## 📊 Portfolio Optimization Project
 
-#### A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation. <br />This project is not about selecting the best stocks individually, it finds the best combination of assets to maximize diversity and Sharpe ratio.
+#### A finance/data analysis project that builds a full portfolio optimization and risk analysis pipeline using Python, statistical modelling, and Monte Carlo simulation. <br />This project finds the best combination of assets to maximize diversity and Sharpe ratio.
 #### Developed as a 2026 summer project.
 ---
 ## How to Use
